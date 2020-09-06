@@ -1,0 +1,12 @@
+
+#courseFilter {
+  content: "\f002";
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  font-size: 14px;
+  text-decoration: underline;
+  font-family: "Font Awesome 5 Free" ;
+  padding: 12px 20px 12px 40px;
+  border: 0px ;
+  margin-bottom: 12px;
+}
