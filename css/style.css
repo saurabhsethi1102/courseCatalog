@@ -1,11 +1,27 @@
-
 #courseFilter {
-  content: "\f002";
-  background-position: 10px 12px;
-  background-repeat: no-repeat;
+  background-color: inherit;
   font-size: 14px;
-  font-family: "Font Awesome 5 Free" ;
-  padding: 12px 20px 12px 40px;
-  border: 0px ;
+  border: 0px;
   margin-bottom: 12px;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid grey;
+  width: 120px;
+  height: 120px;
+  text-align: center;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

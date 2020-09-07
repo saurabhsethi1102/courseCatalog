@@ -1,6 +1,7 @@
 $(document).ready(function () {
     categories();
     courses();
+    
 });
 
 $('body').on('change', 'input[type=radio][name=category]', function() {
@@ -19,6 +20,7 @@ function getFilteredCourses(array, key, value) {
 }
   
 function categories() {
+    $('#loader1').show();
     var today = new Date().getTime;
     const proxy = "https://tranquil-dawn-42121.herokuapp.com/";
     const urlCategories = 'https://frontend-hiring.appspot.com/all_categories';
@@ -40,9 +42,11 @@ function categories() {
         }   
       },
     });
+    $('#loader1').hide(500);
 }
 
-function courses(category="all") {
+function courses(category = "all") {
+    $('#loader2').show();
     var today = new Date().getTime;
     const proxy = "https://tranquil-dawn-42121.herokuapp.com/";
     const urlCourses = 'https://frontend-hiring.appspot.com/all_courses';
@@ -113,16 +117,21 @@ function courses(category="all") {
                 }   
             }
         },
-     });
+    });
+    $('#loader2').hide(500);
+
 }
 
 $("#courseFilter").on("keyup", function() {
     var input = $(this).val().toUpperCase();
     $(" .card").each(function() {
-      if ($(this).data("string").toUpperCase().indexOf(input) < 0) {
-          $(this).hide();
-      } else {
-          $(this).show();
-      }
+        if ($(this).data("string").toUpperCase().indexOf(input) < 0) {
+            $(this).hide();
+        }
+        else {
+            $(this).show();
+        }
+        let cardCount = $('#courses .card:visible').length;
+        $('#courseArrayLength').text(cardCount + ' courses open for registration');
     })
   });
