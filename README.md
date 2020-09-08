@@ -7,13 +7,14 @@
 <b>For Developement Environment</b>
 <ul>
 <li>Open "development" folder in your local machine</li>
-<li>Now open index.html to view the Catalog</li>
+<li>Now open "js/scripts.js" and enter your secret key to access the APIs</li>
+<li>Then open index.html to view the Catalog</li>
 </ul>
 <hr>
 <b>For Production Environment</b>
 <ul>
 <li>Open "production" folder in your local machine</li>
-<li>Now if you wish to change the API url then go to "js/scripts.js" and change url1 and url2 accordingly.</li>
+<li>Now first enter the secret key to access the APIs and if you wish to change the API url then go to "js/scripts.js" and change url1 and url2 accordingly.</li>
 <li>Now open index.html to view the Catalog with changes.</li>
 </ul>
 <hr>
