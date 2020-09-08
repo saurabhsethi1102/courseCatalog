@@ -1,27 +1,43 @@
 $(document).ready(function () {
+    //Fetching Categories
     categories();
+    //Fetching Courses
     courses();
-    
+    //Changing courses on click of radio button
+    $('body').on('change', 'input[type=radio][name=category]', function() {
+        if (this.value == 'all') {
+            courses();
+        }
+        else{
+            courses(this.value);
+        }
+    });
+    //Searching courses on the basis of words typed in search box
+    $("#courseFilter").on("keyup", function() {
+        var input = $(this).val().toUpperCase();
+        $(" .card").each(function() {
+            if ($(this).data("string").toUpperCase().indexOf(input) < 0) {
+                $(this).hide();
+            }
+            else {
+                $(this).show();
+            }
+            let cardCount = $('#courses .card:visible').length;
+            $('#courseArrayLength').text(cardCount + ' courses open for registration');
+        })
+    });
 });
 
-$('body').on('change', 'input[type=radio][name=category]', function() {
-    if (this.value == 'all') {
-        courses();
-    }
-    else{
-        courses(this.value);
-    }
-});
-
-function getFilteredCourses(array, key, value) {
+//Function to filter courses choosen
+function getChoosenCourses(array, key, value) {
     return array.filter(function(e) {
       return e[key] == value;
     });
 }
-  
+
+//Function to fetch categories using API
 function categories() {
     $('#loader1').show();
-    var today = new Date().getTime;
     const proxy = "https://tranquil-dawn-42121.herokuapp.com/";
     const urlCategories = 'https://frontend-hiring.appspot.com/all_categories';
     const url1=proxy + urlCategories;
@@ -34,7 +50,7 @@ function categories() {
       success: function(data) {
         $('#category').empty();
         $('#category').append('<input type="radio" id="all" name="category" value="all" checked>');
-        $('#category').append('<label for="all">All</label><br>');  
+        $('#category').append('<label for="all"> All</label><br>');  
         var categoryArray=eval(JSON.parse(data)['payload']);
         for (var i=0; i<categoryArray.length; i++){
             $('#category').append('<input type="radio" id="'+categoryArray[i]+'" name="category" value="'+categoryArray[i]+'">');
@@ -44,7 +60,7 @@ function categories() {
     });
     $('#loader1').hide(500);
 }
-
+//Function to fetch courses using API
 function courses(category = "all") {
     $('#loader2').show();
     var today = new Date().getTime;
@@ -74,7 +90,7 @@ function courses(category = "all") {
                     courses += '<div class="col-sm-3" style="text-align:center"><i class="far fa-calendar-alt"></i></div>';
                     var start_date = new Date(courseArray[i]['start_date']).getTime();
                     var end_date = new Date(courseArray[i]['end_date']).getTime();
-                    if (today< start_date) {
+                    if (today < start_date) {
                         courses += '<div class="col-sm-9" id="otherDetails"><p>Pre-registration<br>'+courseArray[i]['start_date']+'-'+courseArray[i]['end_date']+'<br>'+courseArray[i]['estimated_workload']+'</p></div>';
                     }
                     else if (start_date < today < end_date){
@@ -88,8 +104,9 @@ function courses(category = "all") {
                 }
             }
             else {
+                $('#courses').empty();
                 var courseArray = eval(JSON.parse(data)['payload']);
-                var filterArray=getFilteredCourses(courseArray, 'category', category);
+                var filterArray=getChoosenCourses(courseArray, 'category', category);
                 $('#courseArrayLength').text(filterArray.length + ' courses open for registration');
                 for (var i = 0; i < filterArray.length; i++){
                     var courses = '<div class= "card" style = "height: 25rem; width: 22rem ; margin: 10px;" data-string="'+filterArray[i]['title']+' '+filterArray[i]['instructor_name']+' '+filterArray[i]['start_date']+' '+filterArray[i]['end_date']+' '+filterArray[i]['estimated_workload']+'">';
@@ -119,19 +136,4 @@ function courses(category = "all") {
         },
     });
     $('#loader2').hide(500);
-
 }
-
-$("#courseFilter").on("keyup", function() {
-    var input = $(this).val().toUpperCase();
-    $(" .card").each(function() {
-        if ($(this).data("string").toUpperCase().indexOf(input) < 0) {
-            $(this).hide();
-        }
-        else {
-            $(this).show();
-        }
-        let cardCount = $('#courses .card:visible').length;
-        $('#courseArrayLength').text(cardCount + ' courses open for registration');
-    })
-  });
