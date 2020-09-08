@@ -1,3 +1,5 @@
+//Secret key to access APIs
+var secret_keys = ""; 
 $(document).ready(function () {
     //Fetching Categories
     categories();
@@ -45,7 +47,7 @@ function categories() {
       url: url1,
       type: 'GET',
       data: {
-         secret : 'HelloMars'
+         secret : secret_keys
       },
       success: function(data) {
         $('#category').empty();
@@ -71,7 +73,7 @@ function courses(category = "all") {
         url: url2,
         type: 'GET',
         data: {
-           secret : 'HelloMars'
+           secret : secret_keys
         },
         success: function (data) {
             $('#courses').empty();
